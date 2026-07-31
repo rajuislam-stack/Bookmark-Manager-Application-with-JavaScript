@@ -1,0 +1,1005 @@
+
+  //  1. MIXINS & VARIABLES
+  
+
+// Mixin for Flexbox Layout
+
+@mixin flex-box($justify: flex-start, $align: center, $direction: row, $gap: 0) {
+  display: flex;
+  flex-direction: $direction;
+  justify-content: $justify;
+  align-items: $align;
+  gap: $gap;
+}
+
+// Responsive Media Query Mixins
+@mixin responsive-tablet {
+  @media (max-width: 1024px) {
+    @content;
+  }
+}
+
+@mixin responsive-mobile{
+  @media (max-width: 768px) {
+    @content;
+  }
+}
+
+@mixin responsive-small-mobile {
+  @media (max-width: 480px) {
+    @content;
+  }
+}
+
+//2. THEME COLOR DEFINITIONS (CSS VARIABLES)
+
+/* Default / Light Mode Variables */
+:root {
+  --bg-main: #E8F0EF;
+  --bg-card: #FFFFFF;
+  --bg-sidebar: #FFFFFF;
+  --bg-header: #FFFFFF;
+  --bg-hover: #E7EFEE;
+  --bg-hover-tag: #E8F0EF;
+  --bg-input: #FFFFFF;
+  --bg-tag: #E8F0EF;
+  --border-light: #E8F0EF;
+  --border-medium: #C0CFCC;
+  --border-input: #DDE9E7;
+  --border-dark: #DDD;
+  --text-primary: #0F172A;
+  --text-secondary: #64748B;
+  --btn-primary: #014745;
+  --btn-primary-text: #FFFFFF;
+  --shadow-color: rgba(0, 0, 0, 0.08);
+  --modal-bg: rgba(0, 0, 0, 0.6);
+}
+
+/* Dark Theme Overrides  (Triggered when .active-theme  is applied via JS) */
+
+:root.active-theme {
+  --bg-main: #021817;
+  --bg-card: #052625;
+  --bg-sidebar: #031F1E;
+  --bg-header: #031F1E;
+  --bg-hover: #083836;
+  --bg-hover-tag: #093E3C;
+  --bg-input: #042120;
+  --bg-tag: #093E3C;
+  --border-light: #0B4543;
+  --border-medium: #135E5B;
+  --border-input: #0E4F4C;
+  --border-dark: #0F5E5A;
+  --text-primary: #F1F5F9;
+  --text-secondary: #94A3B8;
+  --btn-primary: #016360;
+  --btn-primary-text: #FFFFFF;
+  --shadow-color: rgba(0, 0, 0, 0.5);
+  --modal-bg: rgba(0, 0, 0, 0.8);
+}
+
+
+
+:root.active-theme img{
+  filter: invert(1) brightness(2);
+}
+
+:root.active-theme .profile-img, 
+:root.active-theme .indivisual-card .card-header-logo img{
+  filter: invert(0);
+}
+
+
+// 3. GLOBAL & BASE STYLES
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+@font-face {
+  font-family: 'Manrope-VariableFont_wght';
+  src: url('../assets/fonts/Manrope-VariableFont_wght') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+body {
+  font-family: 'Manrope-VariableFont_wght', sans-serif;
+  background-color: var(--bg-main);
+  color: var(--text-primary);
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+//  4. MAIN CONTAINER & LAYOUT
+
+.main-container {
+  max-width: 100%;
+  min-height: 100vh;
+  height: 100%;
+  display: grid;
+  grid-template-columns: 290px 1fr;
+  grid-template-rows: 78px 98px auto;
+  grid-template-areas: "sidebar header" "sidebar bookmark-header" "sidebar card-container";
+  background-color: var(--bg-main);
+}
+
+@include responsive-tablet {
+  .main-container {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto;
+    grid-template-areas: "header" "bookmark-header" "card-container";
+  }
+}
+
+
+// 5. SIDEBAR SECTION
+
+.sidebar-container-modal{
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  z-index: 4000;
+  background-color: var(--modal-bg);
+  backdrop-filter: blur(2px);
+  display: none;
+}
+
+ @include responsive-tablet(){
+   .sidebar-container-modal.active-sidebar{
+    display: flex;
+   }
+ }
+
+.sidebar-container {
+  align-self: flex-start;
+  grid-area: sidebar;
+  position: sticky;
+  top: 0;
+  left: 0;
+  background-color: var(--bg-sidebar);
+  @include flex-box(center, center, column, 18px);
+  padding: 14px;
+  border: 1px solid var(--border-light);
+  border-bottom: none;
+  z-index: 100;
+}
+
+@include responsive-tablet {
+  .sidebar-container {
+    display: none;
+    position: fixed;
+    width: 290px;
+    height: 100vh;
+    box-shadow: 4px 0 15px var(--shadow-color);
+  }
+  
+  .sidebar-container.active-sidebar {
+    @include flex-box(flex-start, center, column, 18px);
+    z-index: 5000;
+    overflow: scroll;
+  }
+}
+
+.logo-section {
+  width: 100%;
+  @include flex-box(space-between, center, row);
+  padding: 4px;
+}
+
+
+
+.logo-section div {
+  
+  align-self: flex-start;
+  width: 30px;
+  height: 30px;
+  border-radius: 4px;
+  @include flex-box(center, center);
+  display: none;
+
+  @include responsive-tablet(){     
+    display: flex;
+  }
+}
+
+.logo-section div:hover {
+  background-color: var(--bg-hover);
+  cursor: pointer;
+}
+
+.navigation-section {
+  width: 100%;
+  @include flex-box(flex-start, stretch, column, 4px);
+}
+
+.home, .archived {
+  @include flex-box(flex-start, center, row, 8px);
+  height: 42px;
+  border-radius: 8px;
+  transition: all ease-in-out 0.1s;
+  padding: 10px;
+  color: var(--text-primary);
+  text-decoration: none;
+}
+
+.home.selectedBackground {
+  background-color: var(--bg-hover);
+}
+
+.archived.selectedBackground {
+  background-color: var(--bg-hover);
+}
+
+.home:hover, .archived:hover {
+  background-color: var(--bg-hover);
+  cursor: pointer;
+}
+
+.tag-section {
+  width: 100%;
+  height: 100%;
+  @include flex-box(flex-start, stretch, column, 14px);
+}
+
+.tag-section p:first-child {
+  width: 100%;
+  @include flex-box(space-between, flex-start);
+  padding-right: 12px;
+  color: var(--text-secondary);
+}
+
+#reset-button {
+  width: 40px;
+  height: 30px;
+  border: none;
+  background-color: inherit;
+  border-bottom: 2px solid var(--border-dark);
+  color: var(--text-primary);
+  cursor: pointer;
+}
+
+#showTags {
+  width: 100%;
+  @include flex-box(flex-start, stretch, column);
+}
+
+.indivisual-tag-div {
+  @include flex-box(space-between, center, row);
+  width: 100%;
+  height: 42px;
+  padding: 8px;
+  border-radius: 8px;
+  transition: all ease-in-out 0.1s;
+  color: var(--text-primary);
+}
+
+.indivisual-tag-div:hover {
+  background-color: var(--bg-hover-tag);
+}
+
+.indivisual-tag-div p {
+  width: 24px;
+  height: 24px;
+  @include flex-box(center, center);
+  border-radius: 50%;
+  background-color: var(--bg-tag);
+  color: var(--text-secondary);
+}
+
+input[type="checkbox"] {
+  margin-right: 8px;
+}
+
+.labelElement {
+  width: fit-content;
+  padding: 4px;
+  color: var(--text-primary);
+}
+
+.labelElement:hover, .labelElement input:hover {
+  cursor: pointer;
+}
+
+.labelElement input:checked {
+  accent-color: var(--btn-primary);
+}
+
+//6. HEADER SECTION
+
+.header-container {
+  grid-area: header;
+  @include flex-box(flex-start, center, row);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background-color: var(--bg-header);
+  border: 1px solid var(--border-light);
+  padding: 20px;
+  gap: 4px;
+}
+
+@include responsive-tablet(){
+  .header-container{
+    padding:12px 40px;
+  }
+}
+
+
+.header-container div:first-child {
+  width: 80px;
+  height: 45px;
+  border-radius: 8px;
+  @include flex-box(center, center);
+  border: 2px solid var(--border-medium);
+  margin-right: 14px;
+  background-color: var(--bg-card);
+  display: none;
+
+  @include responsive-tablet(){       
+       display: flex;
+  }
+}
+
+.header-container div:first-child:hover {
+  background-color: var(--bg-hover-tag);
+}
+
+.search-bar {
+  max-width: 320px;
+  width: 100%;
+  height: 45px;
+  border: 2px solid var(--border-input);
+  border-radius: 8px;
+  margin-right: auto;
+  background-color: var(--bg-input);
+}
+
+@include responsive-mobile {
+  .search-bar {
+    max-width: 100%;
+  }
+}
+
+.search-bar label {
+  @include flex-box(flex-start, center, row);
+  padding-left: 8px;
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
+}
+
+.search-bar input {
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
+  border: none;
+  margin-left: 4px;
+  background-color: transparent;
+  color: var(--text-primary);
+}
+
+.search-bar input:focus {
+  outline: none;
+}
+
+.search-bar label img {
+  width: 20px;
+  height: 20px;
+}
+
+.header-container button {
+  width: 169px;
+  height: 46px;
+  background-color: var(--btn-primary);
+  color: var(--btn-primary-text);
+  border-radius: 8px;
+  border: none;
+  @include flex-box(center, center, row, 6px);
+  margin-right: 14px;
+  cursor: pointer;
+}
+
+@include responsive-small-mobile {
+  .header-container button {
+    width: 80px;
+    height: 45px;
+    padding: 0;
+    font-size: 0;
+    margin-left: 4px;
+  }
+}
+
+.profile-img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  cursor: pointer;
+}
+
+//7. BOOKMARK HEADER SECTION
+
+.bookmark-header-container {
+  grid-area: bookmark-header;
+  @include flex-box(space-between, center, row);
+  background-color: var(--bg-main);
+  padding-top: 14px;
+  padding: 20px;
+
+  @include responsive-tablet(){
+    padding:20px 40px;
+  }
+}
+
+.sort-by {
+  width: 100px;
+  height: 40px;
+  background-color: var(--bg-card);
+  @include flex-box(center, center, row, 5px);
+  border-radius: 8px;
+  border: 2px solid var(--border-medium);
+  color: var(--text-primary);
+  cursor: pointer;
+}
+
+.sort-by:hover {
+  background-color: var(--bg-hover-tag);     
+}
+
+// 8. BOOKMARK GRID CONTAINER & CARDS
+
+.bookmark-grid-container {
+  width: 100%;
+  min-height: 100vh;
+  height: 100%;
+  grid-area: card-container;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: auto;
+  align-content: flex-start;
+  gap: 20px;
+  background-color: var(--bg-main);
+  padding: 20px;
+}
+
+@include responsive-tablet {
+  .bookmark-grid-container {
+    grid-template-columns: 1fr 1fr;
+    padding: 40px;
+  }
+}
+
+@include responsive-mobile {
+  .bookmark-grid-container {
+    grid-template-columns: 1fr;
+    padding: 40px;
+  }
+}
+
+.indivisual-card {
+  max-width: 338px;
+  width: 100%;
+  max-height: 300px;
+  min-height: 272px;
+  height: 100%;
+  background-color: var(--bg-card);
+  border-radius: 8px;
+  margin: 0 auto;
+  @include flex-box(space-between, stretch, column);
+  border: 1px solid var(--border-light);
+  box-shadow: 0 2px 8px var(--shadow-color);
+
+  @include responsive-tablet(){
+    max-width: 100%;
+  }
+
+  @include responsive-mobile(){
+    max-width: 100%;
+  }
+  
+  @include responsive-small-mobile(){
+    max-width: 100%;
+  }
+}
+
+.indivisual-card-containder {
+  width: 100%;
+  height: 100%;
+  @include flex-box(flex-start, flex-start, column, 14px);
+  padding: 14px;
+}
+
+.indivisual-card-header {
+  width: 100%;
+  @include flex-box(flex-start, flex-start, row, 8px);
+}
+
+.card-header-logo {
+  @include flex-box(center, center);
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--border-light);
+  border-radius: 8px;
+  background-color: var(--bg-main);
+}
+
+hr {
+  width: 100%;
+  border: 1px solid var(--border-dark);
+}
+
+.card_tags_containder {
+  justify-self: flex-start;
+  height: fit-content;
+  @include flex-box(flex-start, center, row, 8px);
+  flex-wrap: wrap;
+}
+
+.card_tags_containder span {
+  height: 24px;
+  width: fit-content;
+  @include flex-box(center, center);
+  padding: 8px;
+  border-radius: 4px;
+  background-color: var(--bg-tag);
+  color: var(--text-secondary);
+}
+
+.card_footer {
+  width: 100%;
+  @include flex-box(space-between, center, row);
+  padding: 0 14px 0 14px;
+  border-top: 1px solid var(--border-dark);
+}
+
+.card_footer_info {
+  width: 100%;
+  height: 40px;
+  @include flex-box(flex-start, center, row, 14px);
+  color: var(--text-secondary);
+}
+
+.footer-info-div {
+  width: fit-content;
+  @include flex-box(space-between, center, row, 4px);
+}
+
+.footer-info-div img {
+  width: 16px;
+  height: 16px;
+}
+
+.card_footer .archieve-div {
+  height: 20px;
+  width: fit-content;
+  @include flex-box(center, center);
+  padding: 8px;
+  border-radius: 4px;
+  background-color: var(--bg-tag);
+  cursor: pointer;
+}
+
+// 9. MODAL & POPUPS
+
+#modal-section {
+  width: 100vw;
+  height: 100vh;
+  background-color: var(--modal-bg);
+  backdrop-filter: blur(4px);
+  position: fixed;
+  z-index: 1100;
+  display: none;
+  @include flex-box(center, center);
+  top: 0;
+  left: 0;
+  padding: 30px;
+}
+
+.add-edit-section {
+  max-width: 550px;
+  width: 100%;
+  max-height: 570px;
+  height: 100%;
+  background-color: var(--bg-card);
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  @include flex-box(flex-start, center, column, 14px);
+  padding: 24px;
+  padding-bottom: 34px;
+}
+
+.title {
+  width: 100%;
+  height: 50px;
+  @include flex-box(space-between, center, row);
+  color: var(--text-primary);
+}
+
+.title button {
+  width: 32px;
+  height: 32px;
+  border: 2px solid var(--border-medium);
+  background-color: var(--bg-card);
+  color: var(--text-primary);
+  border-radius: 6px;
+  align-self: flex-start;
+  @include flex-box(center, center);
+  cursor: pointer;
+}
+
+.input-fields {
+  width: 100%;
+  max-height: 80%;
+  @include flex-box(space-between, stretch, column, 20px);
+}
+
+.input-fields label input,
+.input-fields label textarea {
+  padding: 8px;
+  background-color: var(--bg-input);
+  border: 1px solid var(--border-input);
+  color: var(--text-primary);
+}
+
+.input-fields label input {
+  width: 100%;
+  height: 45px;
+  border-radius: 8px;
+}
+
+#description_input {
+  width: 100%;
+  height: 80px;
+  border-radius: 8px;
+}
+
+.footer-btns {
+  width: 100%;
+  height: 200px;
+  @include flex-box(flex-end, center, row, 14px);
+  padding: 14px;
+  padding-right: 0;
+}
+
+.footer-btns button {
+  width: fit-content;
+  height: 40px;
+  border-radius: 8px;
+  padding: 14px;
+  @include flex-box(center, center);
+  cursor: pointer;
+}
+
+#cancel-btn {
+  border: 2px solid var(--border-medium);
+  background-color: var(--bg-card);
+  color: var(--text-primary);
+}
+
+#add-btn {
+  background-color: var(--btn-primary);
+  color: var(--btn-primary-text);
+  border: none;
+}
+
+#save-update-text {
+  width: 100%;
+}
+
+/* Dialog Popup Styles */
+
+#archieve-unarchieve-delete-section {
+  width: fit-content;
+  height: 181px;
+  background-color: var(--bg-card);
+  border-radius: 8px;
+  padding: 24px;
+  @include flex-box(flex-start, flex-start, column, 14px);
+  position: fixed;
+  z-index: 1200;
+  border: 1px solid var(--border-light);
+  color: var(--text-primary);
+}
+
+#dialog-cancel-btn {
+  width: 90px;
+  height: 40px;
+  border: 2px solid var(--border-medium);
+  border-radius: 8px;
+  background-color: var(--bg-card);
+  color: var(--text-primary);
+  cursor: pointer;
+}
+
+#dialog-add-btn {
+  width: fit-content;
+  height: 40px;
+  padding: 14px;
+  background-color: var(--btn-primary);
+  border-radius: 8px;
+  color: var(--btn-primary-text);
+  border: none;
+  cursor: pointer;
+}
+
+#dialog-add-btn.delete {
+  background-color: #CB0A04;
+  border: none;
+  color: #FFFFFF;
+}
+
+// 10. DROPDOWNS & THEME TOGGLES
+
+#dropdown-modal {
+  width: 100vw;
+  height: 100vh;
+  background-color: transparent;
+  position: fixed;
+  z-index: 1000;
+}
+
+#profile-dropdown {
+  padding: 20px;
+  padding-top: 4px;
+  width: 248px;
+  height: 171px;
+  background-color: var(--bg-card);
+  @include flex-box(space-between, stretch, column);
+  box-shadow: 5px 6px 15px var(--shadow-color);
+  position: fixed;
+  z-index: 1200;
+  border-radius: 8px;
+  border: 1px solid var(--border-light);
+  color: var(--text-primary);
+}
+
+.profile-dropdown-container {
+  height: fit-content;
+  padding: 6px;
+  margin: 4px 0 4px 0;
+  border-radius: 8px;
+  @include flex-box(space-between, center, row);
+}
+
+#profile-dropdown > div:nth-last-of-type(-n + 2):hover {
+  background-color: var(--bg-hover-tag);
+}
+
+#profile-dropdown > div:last-child:hover {
+  cursor: pointer;
+}
+
+.profile-dropdown-flex-content {
+  @include flex-box(space-between, center, row);
+}
+
+.profile-dropdown-container .profile-dropdown-flex-content:last-child {
+  width: 70px;
+  height: fit-content;
+  padding: 4px;
+  border-radius: 4px;
+  background-color: var(--bg-tag);
+}
+
+#profile-dropdown p:last-child {
+  margin-right: auto;
+}
+
+#profile-dropdown img {
+  margin-right: 6px;
+}
+
+/* Theme Toggle Button Logic related styles*/
+
+.change-theme {
+  height: 25px;
+  width: 100%;
+  @include flex-box(flex-end, center, row);
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.light-theme.active-theme {
+  background-color: #FFFFFF;
+  color: #0F172A;
+  cursor: default;
+}
+
+.dark-theme.active-theme {
+  background-color: #002E2D;
+  color: #FFFFFF;
+  cursor: default;
+}
+
+#sortby-dropdown {
+  width: 200px;
+  height: 132px;
+  @include flex-box(space-evenly, stretch, column);
+  background-color: var(--bg-card);
+  box-shadow: 5px 10px 15px var(--shadow-color);
+  position: absolute;
+  z-index: 1200;
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid var(--border-light);
+}
+
+.sortby-dropdown-option {
+  width: 100%;
+  height: 50px;
+  @include flex-box(space-between, center, row);
+  border-radius: 4px;
+  padding: 8px;
+  color: var(--text-primary);
+}
+
+.sortby-dropdown-option:hover {
+  background-color: var(--bg-hover);
+}
+
+#home-actions-dropdown {
+  width: 200px;
+  height: 212px;
+  background-color: var(--bg-card);
+  box-shadow: 3px 5px 15px var(--shadow-color);
+  border-radius: 8px;
+  position: absolute;
+  z-index: 1200;
+  @include flex-box(space-around, stretch, column);
+  padding: 8px;
+  border: 1px solid var(--border-input);
+}
+
+#archieve-actions-dropdown {
+  width: 200px;
+  height: 172px;
+  background-color: var(--bg-card);
+  box-shadow: 3px 5px 15px var(--shadow-color);
+  border-radius: 8px;
+  position: absolute;
+  z-index: 1200;
+  @include flex-box(space-around, stretch, column);
+  padding: 8px;
+  border: 1px solid var(--border-input);
+}
+
+.dropdown-menu {
+  width: 100%;
+  height: 34px;
+  @include flex-box(flex-start, center, row, 4px);
+  border-radius: 8px;
+  padding: 6px;
+  color: var(--text-primary);
+}
+
+.dropdown-menu:hover {
+  background-color: var(--bg-hover);
+  transform: scaleY(1.08);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.dropdown-menu img {
+  width: 16px;
+  height: 16px;
+}
+
+.dropdown-menu-dot {
+  width: 32px;
+  height: 32px;
+  border: 2px solid var(--border-medium);
+  background-color: var(--bg-card);
+  border-radius: 8px;
+  @include flex-box(center, center);
+  margin-left: auto;
+}
+
+.dropdown-menu-dot:hover {
+  background-color: var(--bg-hover-tag);
+  cursor: pointer;
+}
+
+
+//  11. CONFIRMATION POPUP
+
+#confirmation-modal {
+  background-color: transparent;
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  z-index: 1300;
+}
+
+#confirmation-message {
+  width: 340px;
+  height: 41px;
+  background-color: var(--bg-card);
+  @include flex-box(flex-start, center, row, 6px);
+  box-shadow: 2px 3px 15px var(--shadow-color);
+  position: fixed;
+  z-index: 1400;
+  top: 3px;
+  right: 10px;
+  padding: 0 14px 0 14px;
+  border-radius: 8px;
+  border: 1px solid var(--border-input);
+  color: var(--text-primary);
+  transform: translateX(120%);
+  transition: transform 0.35s ease-in-out;
+}
+
+#confirmation-message.show-confirmation-div-smothly {
+  transform: translateX(0);
+}
+
+#confirmation-img {
+  width: 20px;
+  height: 20px;
+}
+
+#confirmation-message img[alt="icon-close"] {
+  width: 18px;
+  height: 18px;
+  margin-left: auto;
+}
+
+
+//12. SIGN IN MODAL SECTION
+
+.sign-in-modal {
+  width: 100vw;
+  height: 100vh;
+  background-color: var(--bg-main);
+  position: fixed;
+  z-index: 2000;
+  @include flex-box(center, center);
+  padding: 30px;
+}
+
+.sign-in-page {
+  width: 450px;
+  height: 80%;
+  border-radius: 8px;
+  padding: 30px;
+  background-color: var(--bg-card);
+  @include flex-box(space-between, center, column);
+  border: 1px solid var(--border-light);
+  box-shadow: 0 4px 20px var(--shadow-color);
+}
+
+.sign-in-page div:nth-last-of-type(-n + 2) {
+  align-self: flex-start;
+}
+
+.sign-in-page form {
+  width: 100%;
+  @include flex-box(flex-start, center, column, 14px);
+}
+
+.sign-in-page form > label {
+  width: 100%;
+  color: var(--text-primary);
+}
+
+.sign-in-page input, .sign-in-page button {
+  width: 100%;
+  height: 40px;
+  margin-top: 4px;
+  border-radius: 8px;
+}
+
+.sign-in-page input {
+  padding-left: 8px;
+  background-color: var(--bg-input);
+  border: 1px solid var(--border-input);
+  color: var(--text-primary);
+}
+
+.sign-in-page button {
+  background-color: var(--btn-primary);
+  border: none;
+  color: var(--btn-primary-text);
+  cursor: pointer;
+}

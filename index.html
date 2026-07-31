@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Raju Islam— Bookmark Manager Application</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+ <div class="main-container">
+
+   <!-- sidebar section -->
+    
+    <div class="sidebar-container-modal"></div>
+
+   <div class="sidebar-container">
+       
+       <div class="logo-section">
+        <img src="assets/images/logo-light-theme.svg" alt="bookmark-logo">
+        <div id="close-sidebar-btn">
+          <img src="assets/images/icon-close.svg" alt="icon-close">
+        </div>
+       </div>
+
+       <div class="navigation-section">
+         <div class="home">
+           <img src="assets/images/icon-home.svg" alt="icon-home">
+           <p>Home</p>
+         </div>
+
+         <div class="archived">
+          <img src="assets/images/icon-archive.svg" alt="icon-archive">
+          <p>Archived</p>
+         </div>
+       </div>
+
+       <div class="tag-section">
+        <p>TAGS   <button id="reset-button">Reset</button></p>
+         <div id="showTags"></div>
+       </div>
+   </div>
+   
+   <!--searchbar header section  -->
+
+   <div class="header-container">
+         <div id="show-sidebar-menu-btn">
+          <img src="assets/images/icon-menu-hamburger.svg" alt="icon-menu-hamburger">
+         </div>
+
+        <div class="search-bar">
+           <label>
+            <img src="assets/images/icon-search.svg" alt="icon-search">
+            <input placeholder="Search by title..." id="search_input"></input>
+           </label>
+        </div>
+
+        <button id="add-bookmark-btn">
+          <img src="assets/images/icon-add.svg" alt="icon-add">
+          <span>Add Bookmark</span>
+        </button>
+
+        <div class="profile-img-div">
+          <img class="profile-img" src="assets/images/image-avatar.webp" alt="image-avatar">
+        </div>
+   </div>
+   
+  
+    <!-- bookmark header section -->
+
+    <div class="bookmark-header-container">
+      <h1 id="bookmark-heading-main">All Bookmarks</h1>
+
+      <div class="sort-by">
+        <img src="assets/images/icon-sort.svg" alt="icon-sort">
+        <span>Sort By</span>
+      </div>
+     
+    </div>
+    
+   <!-- showing all cards or bookmark grid section-->
+    
+    <div class="cards-container">
+      <div class="bookmark-grid-container home-section"></div>
+      <div class="bookmark-grid-container archive-section"></div>
+    </div>
+
+   <!--All modals:  Adding, editing,archieve, unachieve, deleting field and modal div-->
+
+    <div id="modal-section" >
+
+      <div class="add-edit-section">
+
+         <div class="title">
+           <h2 id="header-text">Add a Bookmark</h2>
+           <button id="cross-btn">
+             <img src="assets/images/icon-close.svg" alt="icon-close">
+           </button>
+         </div>
+
+         <p id="save-update-text">Save a link with details to keep your collection organized.</p>
+      
+         <form class="input-fields">
+           <label>
+              <p>Title * </p>
+              <input type="text" id="title_input"  >
+           </label>
+
+           <label>
+              <p>Description * </p>
+              <textarea id="description_input" ></textarea>
+              <p align="right"><span>0</span>/280</p>
+           </label>
+
+           <label>
+              <p>Website URL * </p>
+              <input type="text" id="url_input">
+           </label>
+
+           <label>
+              <p>Tags * </p>
+              <input type="text" placeholder="e.g design, learning, tools" id="tag_input" >
+           </label>
+      </form>
+
+       <div class="footer-btns">
+         <button id="cancel-btn">Cancel</button>
+         <button id="add-btn">Add Bookmark</button>
+       </div>
+     </div>
+
+     <div id="archieve-unarchieve-delete-section">
+          <div class="title">
+           <h2 id="dialog-header-text">Archieve bookmark</h2>
+           <button id="dialog-cross-btn">
+             <img src="assets/images/icon-close.svg" alt="icon-close">
+           </button>
+         </div>
+         <p id="dialog-text">Are you sure you want to archieve this bookmark?</p>
+         <div class="footer-btns">
+           <button id="dialog-cancel-btn">Cancel</button>
+           <button id="dialog-add-btn">Archieve</button>
+         </div>
+     </div>
+
+    </div>
+
+
+    <!--All dropdowns: profile, sortby, home menu, archieve menu dropdowns and modal-->
+
+     <div id="dropdown-modal">
+
+       <!-- profile dropdown -->
+
+          <div id="profile-dropdown">
+            <div class="profile-dropdown-container">
+                <img class="profile-img" src="assets/images/image-avatar.webp" alt="image-avatar">
+                <div>
+                  <h3>Emily Carter</h3>
+                  <p>emily101@gmail.com</p>
+                </div>
+            </div>
+            <hr>
+            <div class="profile-dropdown-container">
+              <div class="profile-dropdown-flex-content">
+                  <img src="assets/images/icon-theme.svg" alt="icon-theme">
+                  <p>Theme</p>
+              </div>
+              <div class="profile-dropdown-flex-content">
+                  <div class="change-theme light-theme">
+                    <img src="assets/images/icon-light-theme.svg" alt="icon-light-theme">
+                  </div>
+                  <div class="change-theme dark-theme">
+                    <img src="assets/images/icon-dark-theme.svg" alt="icon-dark-theme" >
+                  </div>
+              </div>
+            </div>
+              <hr>
+            <div class="profile-dropdown-container log-out-div">
+              <img src="assets/images/icon-logout.svg" alt="icon-logout">
+              <p>Logout</p>
+            </div>
+          </div>
+
+
+     <!-- Sortby dropdown -->
+
+      <div id="sortby-dropdown">
+           <div class="sortby-dropdown-option" id="0">
+             <p>Recently added</p>
+             <img src="assets/images/icon-check.svg" class="icon-check" alt="icon-check">
+           </div> 
+
+           <div class="sortby-dropdown-option" id="1">
+             <p>Recently visited</p>
+             <img src="assets/images/icon-check.svg" class="icon-check" alt="icon-check">
+           </div>
+
+           <div class="sortby-dropdown-option" id="2">
+             <p>Most visited</p>
+             <img src="assets/images/icon-check.svg" class="icon-check" alt="icon-check">
+           </div>
+       </div>
+
+
+      <!-- Home actions dropdown -->
+
+       <div id="home-actions-dropdown">
+         <div class="dropdown-menu visit-btn">
+           <img src="assets/images/icon-visit.svg" alt="icon-visit">
+           <p>Visit</p>
+         </div>
+
+         <div class="dropdown-menu copy-url-btn">
+           <img src="assets/images/icon-copy.svg" alt="icon-copy">
+           <p>Copy URL</p>
+         </div>
+
+         <div class="dropdown-menu pin-unpin-btn">
+            <img id="pin-unpin-img" src="assets/images/icon-pin.svg" alt="icon-pin">
+            <p id="pin-unpin-text">Pin</p>
+         </div>
+
+         <div class="dropdown-menu edit-btn">
+          <img src="assets/images/icon-edit.svg" alt="icon-edit">
+          <p>Edit</p>
+         </div>
+
+         <div class="dropdown-menu archieve-unarchieve-btn">
+          <img src="assets/images/icon-archive.svg" alt="icon-archive">
+          <p>Archieve</p>
+         </div>
+       </div>
+
+
+      <!-- Archieve actions dropdown -->
+
+      <div id="archieve-actions-dropdown">
+        <div class="dropdown-menu visit-btn">
+          <img src="assets/images/icon-visit.svg" alt="icon-visit">
+          <p>Visit</p>
+        </div>
+
+        <div class="dropdown-menu copy-url-btn">
+          <img src="assets/images/icon-copy.svg" alt="icon-copy">
+          <p>Copy URL</p>
+        </div>
+
+        <div class="dropdown-menu archieve-unarchieve-btn">
+          <img src="assets/images/icon-unarchive.svg" alt="icon-unarchive">
+          <p>Unarchieve</p>
+        </div>
+
+        <div class="dropdown-menu delete-btn">
+          <img src="assets/images/icon-delete.svg" alt="icon-delete">
+          <p>Delete Permanently</p>
+        </div>
+      </div>
+
+     </div>
+
+     <!-- confirmation Releted popup and modal -->
+
+     <div id="confirmation-modal">
+      
+     <!-- //Showing copied confermation messages -->
+
+     <div id="confirmation-message">
+      <img src="assets/images/icon-copy.svg" alt="icon-copy" id="confirmation-img">
+      <p id="confirmation-text">Link copied to clipboard.</p>
+      <img src="assets/images/icon-close.svg" alt="icon-close" id="confirmation-close-btn">
+     </div>
+
+     </div>
+
+
+
+     <!-- Sign-in Modal and Form section -->
+
+     <div class="sign-in-modal">
+        <div class="sign-in-page">
+           <div >
+           <img src="assets/images/logo-light-theme.svg" alt="bookmark-logo">
+           </div>
+
+           <div>
+            <h2>Log in to your account</h2> <br>
+            <p>Welcome back! Please enter your details.</p>
+           </div>
+
+           <form>
+            <label>
+              <p>Email</p> 
+              <input type="text" placeholder="Enter your Email">
+            </label>
+
+            <label>
+              <p>Password</p> 
+              <input type="text" placeholder="Enter your Password">
+            </label>
+
+            <button>
+              Log in
+            </button>
+           </form>
+
+           <p>Forgot password? <a href="">Reset it</a></p>
+           <p>Don't have an account? <a href="">Sign up</a></p>
+
+        </div>
+     </div>
+
+  
+ </div>
+
+  <script src="./js/script.js" type="module"></script>
+</body>
+</html>
