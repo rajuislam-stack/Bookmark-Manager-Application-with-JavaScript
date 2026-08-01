@@ -65,7 +65,7 @@ function cardHeader(bookmarkObj){
           header_menu.setAttribute('id', bookmarkObj.id)
 
     const header_menu_img = elementCreate('img')
-          header_menu_img.setAttribute('src', "..assets/images/icon-menu-bookmark.svg");
+          header_menu_img.setAttribute('src', "assets/images/icon-menu-bookmark.svg");
           header_menu.append(header_menu_img)
 
 
@@ -106,7 +106,7 @@ function cardFooter(bookmarkObj){
    const card_views = elementCreate('div');
          card_views.className = 'footer-info-div';
    const card_views_img = elementCreate('img')
-         card_views_img.setAttribute('src', '..assets/images/icon-visit-count.svg');
+         card_views_img.setAttribute('src', 'assets/images/icon-visit-count.svg');
    const card_views_span = elementCreate('span');
          card_views_span.textContent = bookmarkObj.visitCount;
          card_views.append(card_views_img, card_views_span )
@@ -116,7 +116,7 @@ function cardFooter(bookmarkObj){
    const card_time = elementCreate('div');
          card_time.className = 'footer-info-div';
    const card_clock_img = elementCreate('img')
-         card_clock_img.setAttribute('src', '..assets/images/icon-last-visited.svg' );
+         card_clock_img.setAttribute('src', 'assets/images/icon-last-visited.svg' );
    const card_time_span = elementCreate('span');
          card_time_span.textContent =  dateFormetter(bookmarkObj.lastVisited)
          card_time.append(card_clock_img,card_time_span )
@@ -126,7 +126,7 @@ function cardFooter(bookmarkObj){
    const card_date = elementCreate('div');
          card_date.className = 'footer-info-div';
    const card_date_celender = elementCreate('img')
-         card_date_celender.setAttribute('src', '..assets/images/icon-created.svg');
+         card_date_celender.setAttribute('src', 'assets/images/icon-created.svg');
    const card_date_span = elementCreate('span');
          card_date_span.textContent = dateFormetter(bookmarkObj.createdAt)
          card_date.append(card_date_celender,card_date_span)
@@ -149,7 +149,7 @@ function cardFooter(bookmarkObj){
 
      const pinned = elementCreate('div');
      const pinned_img = elementCreate('img')
-           pinned_img.setAttribute('src', '..assets/images/icon-pin.svg');
+           pinned_img.setAttribute('src', 'assets/images/icon-pin.svg');
            pinned_img.style.width = '18px';
            pinned_img.style.height = '18px';
            pinned.append(pinned_img)
