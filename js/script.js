@@ -257,7 +257,7 @@ search_input.addEventListener('input',(event)=>{
 
           if(filterBookmarksArr.length == 0) {
             const noResultImg = elementCreate('img');
-                  noResultImg.setAttribute('src','../assets/images/no-result.svg');
+                  noResultImg.setAttribute('src','..assets/images/no-result.svg');
             showCardsInHome.append(noResultImg);
             allBookmark_text.textContent = `"No results"`
           }
