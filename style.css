@@ -59,7 +59,7 @@
 
 @font-face {
   font-family: "Manrope-VariableFont_wght";
-  src: url("assets/fonts/Manrope-VariableFont_wght") format("truetype");
+  src: url("assets/fonts/Manrope-VariableFont_wght.ttf") format("truetype");
   font-weight: 400;
   font-style: normal;
 }
